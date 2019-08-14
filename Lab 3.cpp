@@ -1,68 +1,89 @@
-#include<bits/stdc++.h>
+#include <stdio.h>
+#include <iostream>
+#include <stack>
 
 using namespace std;
 
-bool checkBalance(string str) {
-    stack<char> s;
-    s.push('0');
-    bool balance = true;
-    for(int i = 0; i < str.length(); ++i) {
-        if((str[i] == '(' || str[i] == '{') || (str[i] == '[' || str[i] == '<')) {
-            s.push(str[i]);
-        } else if(str[i] == ')') {
-            if(s.top() != '(') {
-                balance = false;
-                break;
-            } else {
-                s.pop();
-            }
-        } else if(str[i] == '}') {
-            if(s.top() != '{') {
-                balance = false;
-                break;
-            } else {
-                s.pop();
-            }
-        } else if(str[i] == ']') {
-            if(s.top() != '[') {
-                balance = false;
-                break;
-            } else {
-                s.pop();
-            }
-        } else if(str[i] == '>') {
-            if(s.top() != '<') {
-                balance = false;
-                break;
-            } else {
-                s.pop();
-            }
-        } else {
-            if(s.top() != '|') {
-                s.push(str[i]);
-            } else {
-                s.pop();
-            }
-        }
-    }
-    if(s.size() > 1) {
-        balance = false;
-    }
-
-    return balance;
+bool check_parenthesis(string str_paren)
+{
+	stack<char> stck_paren;
+	int n=str_paren.length();
+	for(int i=0;i<n;i++)
+	{
+		if((str_paren[i]=='(')||(str_paren[i]=='{')||(str_paren[i]=='[')||(str_paren[i]=='<'))
+		{
+			stck_paren.push(str_paren[i]);
+		}
+		else if((str_paren[i]==')')||(str_paren[i]=='}')||(str_paren[i]==']')||(str_paren[i]=='>'))
+		{
+			if(stck_paren.empty())
+			{
+				return false;
+			}
+			switch(str_paren[i])
+			{
+				case ')':
+				{
+					if(stck_paren.top()=='(')
+						stck_paren.pop();
+					else return false;
+					break;
+				}
+				case '}':
+				{
+					if(stck_paren.top()=='{')
+						stck_paren.pop();
+					else return false;
+					break;
+				}
+				case ']':
+				{
+					if(stck_paren.top()=='[')
+						stck_paren.pop();
+					else return false;
+					break;
+				}
+				case '>':
+				{
+					if(stck_paren.top()=='<')
+						stck_paren.pop();
+					else return false;
+					break;
+				}
+			}
+		}
+		else if(str_paren[i]=='|')
+		{
+			if((stck_paren.empty())||(stck_paren.top()!='|'))
+			{
+				stck_paren.push('|');
+			}
+			else
+			{
+				stck_paren.pop();
+			}
+		}
+	}
+	return stck_paren.empty();
 }
 
-int main() {
-    int n;
-    cin >> n;
-    while(n--) {
-        string s;
-        cin >> s;
-        if(checkBalance(s)) {
-            cout << "YES" << '\n';
-        } else {
-            cout << "NO" << '\n';
-        }
-    }
-    return 0;
+int main()
+{
+	int test_cases;
+	cin>>test_cases;
+	bool yes_or_no[test_cases];
+	for(int i=0;i<test_cases;i++)
+	{
+		string input;
+		cin>>input;
+		yes_or_no[i]=check_parenthesis(input);
+	}
+	for(int i=0;i<test_cases;i++)
+	{
+		if(yes_or_no[i])
+			cout<<"YES\n";
+		else
+			cout<<"NO\n";
+	}
+	return 0;
 }
