@@ -20,10 +20,10 @@ int search(ll v,int i, int l, vector<ll> a)
 int main()
 {
     ll n,max_value=-1;
-    int e=0,q,max_index=-1;
+    int e=0,w=1,q,max_index=-1;
     cin>>n>>q;
     ll Q[q][3];
-    vector<ll> U;
+    vector<ll> U,V;
     forl(i,0,q)
     {
         cin>>Q[i][0];
@@ -31,12 +31,16 @@ int main()
         if (Q[i][0]==1)
         {
             cin>>Q[i][1]>>Q[i][2];
-            if(i==0) U.pb(Q[i][1]);
-            else 
-            {
-                if(search(Q[i][1],0,U.size()-1,U)==-1) U.pb(Q[i][1]);
-            }
-            sort(U.begin(),U.end());
+            V.pb(Q[i][1]);
+        }
+    }
+    sort(V.begin(),V.end());
+    if(V.size())
+    {
+        U.pb(V[0]);
+        forl(i,1,V.size())
+        {
+            if (U[w-1]!=V[i]) U.pb(V[i]);
         }
     }
     ll Amount[U.size()];
