@@ -60,7 +60,6 @@ int main()
             S=0;
             lli C=count(i,j,n,m,c[i][j]);
             M=max(M,C);
-            //cout<<V[i].first<<' '<<V[i].second<<endl;
         }
     }
     cout<<M<<endl;
